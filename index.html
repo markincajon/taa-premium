@@ -11,6 +11,7 @@
             background-color: #0a0a0a;
             color: #f3f4f6;
             font-family: 'Montserrat', sans-serif;
+            height: 200vh; /* Aumentado temporariamente só para você testar o scroll/queda do boneco */
         }
         .font-art { font-family: 'Playfair Display', serif; }
         
@@ -38,21 +39,45 @@
         }
         .btn-taa:hover { border-color: #ffffff; background-color: rgba(255, 255, 255, 0.1); }
 
-        /* Animação do Avatar */
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
-            100% { transform: translateY(0px); }
-        }
-        .avatar-float { animation: float 4s ease-in-out infinite; }
+        /* ======================================= */
+        /* ANIMAÇÕES DO MASCOTE 3D                 */
+        /* ======================================= */
         
-        /* Ocultar a barra de rolagem no chat */
+        .mascot-container { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        
+        /* Aceno da mão no balão */
+        @keyframes wave {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(-20deg); }
+            75% { transform: rotate(20deg); }
+        }
+        .waving-hand {
+            display: inline-block;
+            transform-origin: bottom right;
+            animation: wave 1.5s infinite;
+        }
+        
+        /* Queda (Scroll) */
+        .falling { animation: fallShake 0.3s infinite; }
+        @keyframes fallShake {
+            0% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-15px) rotate(-15deg); }
+            50% { transform: translateY(-25px) rotate(15deg); }
+            75% { transform: translateY(-10px) rotate(-10deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+        
+        /* Pensativo */
+        .thinking {
+            transform: scale(1.05) rotate(5deg) translateY(-10px);
+            filter: brightness(1.2);
+        }
+
         .no-scrollbar::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body class="antialiased selection:bg-gray-700 selection:text-white relative">
 
-    <!-- NAVBAR -->
     <nav class="absolute top-0 left-0 w-full p-6 sm:p-10 z-10 flex justify-between items-center bg-gradient-to-b from-black/80 to-transparent pb-16">
         <div class="text-xl font-extrabold tracking-[0.2em] uppercase drop-shadow-lg">
             MARCUS<span class="text-gray-400">.INK</span>
@@ -62,8 +87,7 @@
         </div>
     </nav>
 
-    <!-- HERÓI -->
-    <header class="hero-section min-h-screen flex flex-col justify-end px-6 sm:px-16 pt-32 pb-12 sm:pb-20">
+    <header class="hero-section h-screen flex flex-col justify-end px-6 sm:px-16 pt-32 pb-12 sm:pb-20">
         <div class="max-w-3xl w-full">
             <div class="inline-block border border-gray-700 rounded-full px-4 py-1 mb-4 bg-black/40 backdrop-blur-sm">
                 <span class="text-xs tracking-widest uppercase text-gray-300">Agenda Aberta 2027</span>
@@ -82,32 +106,34 @@
                 <a href="#galeria" class="btn-nexus px-8 py-4 text-xs font-bold uppercase tracking-widest text-center rounded shadow-lg">
                     Ver Portefólio
                 </a>
-                
-                <a href="#link-do-taa" class="btn-taa bg-black/20 px-8 py-4 text-xs font-bold text-white uppercase tracking-widest text-center rounded flex items-center justify-center gap-2 shadow-lg">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                    Orçar com TAA (Assistente)
-                </a>
             </div>
         </div>
     </header>
 
     <!-- ========================================== -->
-    <!-- WIDGET DO CONCIERGE (AVATAR FLUATUANTE)    -->
+    <!-- MASCOTE TAA 3D INTERATIVO                  -->
     <!-- ========================================== -->
     <div class="fixed bottom-6 right-6 z-50 flex flex-col items-end">
         
+        <!-- Balão de Fala do Mascote -->
+        <div id="mascot-bubble" class="bg-gray-100 text-gray-900 text-xs font-bold py-3 px-4 rounded-2xl rounded-br-sm shadow-[0_10px_25px_rgba(0,0,0,0.5)] mb-3 max-w-[220px] transition-all transform origin-bottom-right">
+            <span id="bubble-icon" class="waving-hand text-base mr-1">👋</span>
+            <span id="bubble-text">Olá, <span id="greeting-time"></span>! Sou seu guia virtual.</span>
+        </div>
+
+        <!-- O Boneco 3D -->
+        <button onclick="toggleChat()" id="taa-mascot" class="mascot-container relative w-24 h-28 focus:outline-none drop-shadow-2xl hover:scale-110">
+            <!-- IMAGEM PROVISÓRIA: Depois trocaremos pelo seu mascote oficial renderizado -->
+            <img src="https://cdn3d.iconscout.com/3d/premium/thumb/robot-4993685-4160759.png" class="w-full h-full object-contain" alt="Mascote 3D TAA">
+        </button>
+
         <!-- Janela de Chat (Oculta por padrão) -->
-        <div id="chat-window" class="hidden w-[300px] bg-[#111111] border border-gray-800 rounded-lg shadow-2xl mb-4 overflow-hidden flex flex-col transition-all duration-300 transform origin-bottom-right">
-            <!-- Topo do Chat -->
+        <div id="chat-window" class="hidden absolute bottom-32 right-0 w-[300px] bg-[#111111] border border-gray-800 rounded-xl shadow-2xl overflow-hidden flex flex-col">
             <div class="bg-gradient-to-r from-gray-900 to-black p-4 border-b border-gray-800 flex items-center justify-between">
                 <div class="flex items-center gap-3">
-                    <div class="w-8 h-8 rounded-full border border-gray-600 overflow-hidden">
-                        <!-- Usando a mesma foto do artista em miniatura -->
-                        <img src="IMG_20261109_004046.jpg" class="w-full h-full object-cover" alt="Concierge">
-                    </div>
                     <div>
-                        <p class="text-xs font-bold text-white">Concierge IA</p>
-                        <p class="text-[0.6rem] text-green-400">Online agora</p>
+                        <p class="text-xs font-bold text-white">Assistente TAA</p>
+                        <p class="text-[0.6rem] text-green-400">● Online agora</p>
                     </div>
                 </div>
                 <button onclick="toggleChat()" class="text-gray-500 hover:text-white">
@@ -115,35 +141,79 @@
                 </button>
             </div>
             
-            <!-- Corpo do Chat -->
             <div class="p-4 h-48 overflow-y-auto no-scrollbar flex flex-col gap-3">
-                <!-- Mensagem da IA -->
                 <div class="bg-gray-800/50 rounded-r-lg rounded-bl-lg p-3 max-w-[85%]">
-                    <p class="text-xs text-gray-200">Olá! Sou o guia virtual do estúdio. O que você procura hoje?</p>
+                    <p class="text-xs text-gray-200">Como posso te ajudar com o seu projeto hoje?</p>
                 </div>
                 
-                <!-- Botões de Pergunta (Mockup) -->
                 <button onclick="showAnswer('endereco')" class="text-left bg-transparent border border-gray-700 hover:border-gray-500 text-gray-300 text-xs p-2 rounded w-full transition">📍 Onde fica o estúdio?</button>
                 <button onclick="showAnswer('portfolio')" class="text-left bg-transparent border border-gray-700 hover:border-gray-500 text-gray-300 text-xs p-2 rounded w-full transition">🖼️ Onde vejo as tatuagens?</button>
                 <button onclick="showAnswer('orcamento')" class="text-left bg-transparent border border-gray-700 hover:border-gray-500 text-gray-300 text-xs p-2 rounded w-full transition">💰 Como faço um orçamento?</button>
 
-                <!-- Resposta Dinâmica (Escondida) -->
                 <div id="chat-resposta" class="hidden bg-gray-800/50 rounded-r-lg rounded-bl-lg p-3 max-w-[85%] mt-2">
                     <p id="resposta-texto" class="text-xs text-gray-200"></p>
                 </div>
             </div>
         </div>
-
-        <!-- Botão Redondo do Avatar Flutuante -->
-        <button onclick="toggleChat()" class="avatar-float w-14 h-14 rounded-full border-2 border-gray-700 shadow-[0_0_15px_rgba(255,255,255,0.1)] overflow-hidden relative group">
-            <img src="IMG_20261109_004046.jpg" class="w-full h-full object-cover group-hover:scale-110 transition duration-300" alt="Abrir Chat">
-            <div class="absolute bottom-0 right-0 w-3 h-3 bg-green-500 border-2 border-black rounded-full"></div>
-        </button>
-
     </div>
 
-    <!-- Script de Simulação do Concierge -->
+    <!-- CÉREBRO DA IA: Controla horas, scroll e pensamentos -->
     <script>
+        const mascot = document.getElementById('taa-mascot');
+        const bubbleText = document.getElementById('bubble-text');
+        const bubbleIcon = document.getElementById('bubble-icon');
+        
+        // 1. Saudação baseada na hora local
+        function updateGreeting() {
+            const hour = new Date().getHours();
+            let msg = "Boa noite";
+            if (hour >= 5 && hour < 12) msg = "Bom dia";
+            else if (hour >= 12 && hour < 18) msg = "Boa tarde";
+            
+            const timeSpan = document.getElementById('greeting-time');
+            if(timeSpan) timeSpan.innerText = msg;
+        }
+        updateGreeting();
+
+        // 2. Reação ao Scroll (Queda)
+        let scrollTimer;
+        window.addEventListener('scroll', () => {
+            if(!mascot.classList.contains('falling')) {
+                mascot.classList.add('falling');
+                bubbleIcon.innerText = "😱";
+                bubbleIcon.classList.remove('waving-hand');
+                bubbleText.innerText = "Uooou! Segura aí!";
+            }
+            
+            clearTimeout(scrollTimer);
+            scrollTimer = setTimeout(() => {
+                mascot.classList.remove('falling');
+                bubbleIcon.innerText = "👋";
+                bubbleIcon.classList.add('waving-hand');
+                bubbleText.innerHTML = "Olá, <span id='greeting-time'></span>! Sou seu guia virtual.";
+                updateGreeting();
+            }, 500);
+        });
+
+        // 3. Reação Pensativa Aleatória (a cada 10 segundos)
+        setInterval(() => {
+            if(!mascot.classList.contains('falling') && document.getElementById('chat-window').classList.contains('hidden')) {
+                mascot.classList.add('thinking');
+                bubbleIcon.innerText = "🤔";
+                bubbleIcon.classList.remove('waving-hand');
+                bubbleText.innerText = "Hmm... Qual será sua próxima tattoo?";
+                
+                setTimeout(() => {
+                    mascot.classList.remove('thinking');
+                    bubbleIcon.innerText = "👋";
+                    bubbleIcon.classList.add('waving-hand');
+                    bubbleText.innerHTML = "Olá, <span id='greeting-time'></span>! Sou seu guia virtual.";
+                    updateGreeting();
+                }, 4000);
+            }
+        }, 10000);
+
+        // 4. Controles do Chat
         function toggleChat() {
             const chat = document.getElementById('chat-window');
             chat.classList.toggle('hidden');
@@ -152,18 +222,12 @@
         function showAnswer(tipo) {
             const respostaBox = document.getElementById('chat-resposta');
             const respostaTexto = document.getElementById('resposta-texto');
-            
             respostaBox.classList.remove('hidden');
             
-            if (tipo === 'endereco') {
-                respostaTexto.innerHTML = "Estamos localizados no coração de Dublin. O endereço exato é enviado após a confirmação do agendamento para manter a privacidade do estúdio.";
-            } else if (tipo === 'portfolio') {
-                respostaTexto.innerHTML = "É só rolar a página para baixo ou clicar no botão branco <b>'VER PORTEFÓLIO'</b> que está no meio da tela!";
-            } else if (tipo === 'orcamento') {
-                respostaTexto.innerHTML = "Para orçamentos, clique no botão <b>'Orçar com TAA'</b> logo acima. Nosso assistente especializado vai coletar sua ideia e montar seu projeto!";
-            }
+            if (tipo === 'endereco') respostaTexto.innerHTML = "Estamos em Dublin. O endereço exato é enviado após o agendamento!";
+            else if (tipo === 'portfolio') respostaTexto.innerHTML = "Suba um pouco a tela e clique no botão branco <b>'VER PORTEFÓLIO'</b>.";
+            else if (tipo === 'orcamento') respostaTexto.innerHTML = "Para orçamentos detalhados, nossa IA central fará o atendimento logo abaixo.";
             
-            // Rola o chat para baixo para ver a resposta
             const chatBody = respostaBox.parentElement;
             setTimeout(() => { chatBody.scrollTop = chatBody.scrollHeight; }, 50);
         }
