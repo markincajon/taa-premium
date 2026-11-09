@@ -4,9 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nexus Template | Tatuador Premium</title>
-    <!-- Tailwind CSS para estrutura rápida e responsiva -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Fontes: Playfair para o toque artístico, Montserrat para a modernidade tech -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
     <style>
         body {
@@ -18,21 +16,14 @@
             font-family: 'Playfair Display', serif;
         }
         
+        /* Ajuste do degradê para revelar o rosto no topo e escurecer a base */
         .hero-section {
             background-image: 
-                linear-gradient(to right, #0a0a0a 10%, rgba(10,10,10,0.7) 50%, rgba(10,10,10,0.2) 100%),
+                linear-gradient(to bottom, rgba(10,10,10,0.1) 0%, rgba(10,10,10,0.4) 40%, #0a0a0a 85%, #0a0a0a 100%),
                 url('IMG_20261109_004046.jpg');
             background-size: cover;
             background-position: center top;
             background-repeat: no-repeat;
-        }
-
-        @media (max-width: 768px) {
-            .hero-section {
-                background-image: 
-                    linear-gradient(to bottom, rgba(10,10,10,0.1) 0%, rgba(10,10,10,0.8) 60%, #0a0a0a 100%),
-                    url('IMG_20261109_004046.jpg');
-            }
         }
 
         .btn-nexus {
@@ -58,39 +49,41 @@
 </head>
 <body class="antialiased selection:bg-gray-700 selection:text-white">
 
-    <nav class="absolute top-0 left-0 w-full p-6 sm:p-10 z-10 flex justify-between items-center">
-        <div class="text-xl font-extrabold tracking-[0.2em] uppercase">
-            MARCUS<span class="text-gray-500">.INK</span>
+    <!-- NAVBAR COM PROTEÇÃO DE FUNDO (Sombra superior) -->
+    <nav class="absolute top-0 left-0 w-full p-6 sm:p-10 z-10 flex justify-between items-center bg-gradient-to-b from-black/80 to-transparent pb-16">
+        <div class="text-xl font-extrabold tracking-[0.2em] uppercase drop-shadow-lg">
+            MARCUS<span class="text-gray-400">.INK</span>
         </div>
-        <div class="text-[0.65rem] tracking-[0.3em] text-gray-500 uppercase">
+        <div class="text-[0.65rem] tracking-[0.3em] text-gray-300 uppercase font-bold drop-shadow-lg">
             Powered by Nexus
         </div>
     </nav>
 
-    <header class="hero-section min-h-screen flex items-center px-6 sm:px-16 pt-32 pb-20">
+    <!-- HERÓI COM TEXTO ANCORADO NA BASE -->
+    <header class="hero-section min-h-screen flex flex-col justify-end px-6 sm:px-16 pt-32 pb-12 sm:pb-20">
         
         <div class="max-w-3xl w-full">
             
-            <div class="inline-block border border-gray-700 rounded-full px-4 py-1 mb-6">
+            <div class="inline-block border border-gray-700 rounded-full px-4 py-1 mb-4 bg-black/40 backdrop-blur-sm">
                 <span class="text-xs tracking-widest uppercase text-gray-300">Agenda Aberta 2027</span>
             </div>
             
-            <h1 class="text-5xl sm:text-7xl font-extrabold leading-[1.1] tracking-tight mb-6">
+            <h1 class="text-5xl sm:text-7xl font-extrabold leading-[1.1] tracking-tight mb-4 drop-shadow-xl">
                 A sua visão,<br>
                 <span class="font-art italic font-normal text-gray-400">nossa execução.</span>
             </h1>
             
-            <p class="text-gray-400 max-w-lg text-sm sm:text-base leading-relaxed mb-10">
+            <p class="text-gray-300 max-w-lg text-sm sm:text-base leading-relaxed mb-8 drop-shadow-md">
                 Mais do que tinta na pele. Um estúdio especializado em projetos autorais, planeados meticulosamente para refletir a sua identidade.
             </p>
             
             <div class="flex flex-col sm:flex-row gap-4">
                 
-                <a href="#galeria" class="btn-nexus px-8 py-4 text-xs font-bold uppercase tracking-widest text-center rounded">
+                <a href="#galeria" class="btn-nexus px-8 py-4 text-xs font-bold uppercase tracking-widest text-center rounded shadow-lg">
                     Ver Portefólio
                 </a>
                 
-                <a href="#link-do-taa-aqui" class="btn-taa px-8 py-4 text-xs font-bold text-white uppercase tracking-widest text-center rounded flex items-center justify-center gap-2">
+                <a href="#link-do-taa-aqui" class="btn-taa bg-black/20 px-8 py-4 text-xs font-bold text-white uppercase tracking-widest text-center rounded flex items-center justify-center gap-2 shadow-lg">
                     <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
                     Falar com Assistente IA
                 </a>
