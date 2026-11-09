@@ -4,22 +4,87 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NEXOS Premium | Artista de Elite</title>
+    <!-- Importando o Tailwind CSS para o design -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Importando a fonte moderna Montserrat do Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #050505; color: #ffffff; font-family: sans-serif; }
-        .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 20px; }
-        h1 { font-size: 3rem; font-weight: bold; margin-bottom: 1rem; text-transform: uppercase; }
-        .brand-text { color: #dc2626; } /* Vermelho Carmesim */
-        p { color: #9ca3af; max-width: 600px; margin-bottom: 2rem; line-height: 1.6; }
-        .btn { background-color: #dc2626; color: white; padding: 15px 30px; text-decoration: none; text-transform: uppercase; font-weight: bold; letter-spacing: 2px; }
+        body { 
+            background-color: #030303; 
+            color: #ffffff; 
+            font-family: 'Montserrat', sans-serif; 
+            /* Um fundo com um leve brilho vermelho no centro para dar profundidade */
+            background-image: radial-gradient(circle at center, #1a0505 0%, #030303 60%);
+        }
+        .btn-solid { 
+            background-color: #dc2626; 
+            color: white; 
+            transition: all 0.3s ease; 
+        }
+        .btn-solid:hover { 
+            background-color: #b91c1c; 
+            transform: scale(1.02); 
+        }
+        .btn-outline { 
+            background-color: transparent; 
+            border: 2px solid #dc2626; 
+            color: #dc2626; 
+            transition: all 0.3s ease; 
+        }
+        .btn-outline:hover { 
+            background-color: #dc2626; 
+            color: white; 
+            transform: scale(1.02); 
+        }
     </style>
 </head>
-<body>
-    <div class="hero">
-        <h2 style="font-size: 1rem; letter-spacing: 5px; color: #dc2626; margin-bottom: 20px;">ESTÚDIO DE TATUAGEM PREMIUM</h2>
-        <h1>A sua pele,<br>nossa <span class="brand-text">obra-prima.</span></h1>
-        <p>Especialista em projetos autorais de alto impacto. Transformamos histórias em arte definitiva através de um processo exclusivo de design.</p>
-        <a href="#orcamento" class="btn">Iniciar Meu Projeto</a>
+<body class="min-h-screen flex flex-col justify-center items-center text-center p-6">
+
+    <!-- FOTO DO TATUADOR E NOME -->
+    <div class="mb-8 flex flex-col items-center">
+        <!-- 
+        ========================================================================
+        PARA TROCAR A FOTO: Substitua o link que está dentro do "src=" abaixo 
+        pelo link da foto do tatuador que comprou o site.
+        ======================================================================== 
+        -->
+        <img src="https://images.unsplash.com/photo-1598371839696-5c5bb00bdc28?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" 
+             alt="Foto do Artista" 
+             class="w-32 h-32 rounded-full object-cover border-4 border-red-600 shadow-[0_0_20px_rgba(220,38,38,0.4)] mb-4">
+        
+        <h2 class="text-sm font-bold tracking-[0.3em] text-red-600 uppercase">MARCUS.INK</h2>
     </div>
+
+    <!-- FRASE PRINCIPAL EM DESTAQUE E VERMELHO -->
+    <h1 class="text-4xl md:text-6xl font-black mb-6 uppercase tracking-tighter leading-tight">
+        <span class="text-white">A sua pele,</span><br>
+        <span class="text-red-600 drop-shadow-md">nossa obra-prima.</span>
+    </h1>
+
+    <p class="text-gray-400 max-w-lg mb-12 text-lg font-light leading-relaxed">
+        Especialista em projetos autorais de alto impacto. Transformamos histórias em arte definitiva através de um processo exclusivo de design.
+    </p>
+
+    <!-- ÁREA DOS BOTÕES -->
+    <div class="flex flex-col w-full max-w-sm gap-4">
+        
+        <!-- BOTÃO 1: O ESTÚDIO -->
+        <a href="#estudio" class="btn-solid w-full py-4 px-6 rounded uppercase tracking-widest font-bold text-sm shadow-lg">
+            Conheça Nosso Estúdio
+        </a>
+
+        <!-- 
+        ========================================================================
+        PARA COLOCAR O LINK DA IA (TAA): Substitua o "#" dentro do "href=" abaixo 
+        pelo link do assistente inteligente do tatuador.
+        ======================================================================== 
+        -->
+        <a href="#" class="btn-outline w-full py-3 px-6 rounded flex flex-col items-center justify-center shadow-lg">
+            <span class="uppercase tracking-widest font-bold text-sm mb-1">Fale com a Assistente IA</span>
+            <span class="text-xs opacity-80 font-normal lowercase tracking-wide">conte sua ideia e consulte valores</span>
+        </a>
+
+    </div>
+
 </body>
 </html>
