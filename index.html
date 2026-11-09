@@ -3,88 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEXOS Premium | Artista de Elite</title>
-    <!-- Importando o Tailwind CSS para o design -->
+    <title>Nexus Template | Tatuador Premium</title>
+    <!-- Tailwind CSS para estrutura rápida e responsiva -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Importando a fonte moderna Montserrat do Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;700;900&display=swap" rel="stylesheet">
+    <!-- Fontes: Playfair para o toque artístico, Montserrat para a modernidade tech -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
     <style>
-        body { 
-            background-color: #030303; 
-            color: #ffffff; 
-            font-family: 'Montserrat', sans-serif; 
-            /* Um fundo com um leve brilho vermelho no centro para dar profundidade */
-            background-image: radial-gradient(circle at center, #1a0505 0%, #030303 60%);
+        body {
+            background-color: #0a0a0a;
+            color: #f3f4f6;
+            font-family: 'Montserrat', sans-serif;
         }
-        .btn-solid { 
-            background-color: #dc2626; 
-            color: white; 
-            transition: all 0.3s ease; 
+        .font-art {
+            font-family: 'Playfair Display', serif;
         }
-        .btn-solid:hover { 
-            background-color: #b91c1c; 
-            transform: scale(1.02); 
+        
+        .hero-section {
+            background-image: 
+                linear-gradient(to right, #0a0a0a 10%, rgba(10,10,10,0.7) 50%, rgba(10,10,10,0.2) 100%),
+                url('IMG_20261109_004046.jpg');
+            background-size: cover;
+            background-position: center top;
+            background-repeat: no-repeat;
         }
-        .btn-outline { 
-            background-color: transparent; 
-            border: 2px solid #dc2626; 
-            color: #dc2626; 
-            transition: all 0.3s ease; 
+
+        @media (max-width: 768px) {
+            .hero-section {
+                background-image: 
+                    linear-gradient(to bottom, rgba(10,10,10,0.1) 0%, rgba(10,10,10,0.8) 60%, #0a0a0a 100%),
+                    url('IMG_20261109_004046.jpg');
+            }
         }
-        .btn-outline:hover { 
-            background-color: #dc2626; 
-            color: white; 
-            transform: scale(1.02); 
+
+        .btn-nexus {
+            background-color: #ffffff;
+            color: #000000;
+            transition: all 0.3s ease;
+        }
+        .btn-nexus:hover {
+            background-color: #d1d5db;
+            transform: translateY(-2px);
+        }
+        .btn-taa {
+            background-color: transparent;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(8px);
+            transition: all 0.3s ease;
+        }
+        .btn-taa:hover {
+            border-color: #ffffff;
+            background-color: rgba(255, 255, 255, 0.1);
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-center items-center text-center p-6">
+<body class="antialiased selection:bg-gray-700 selection:text-white">
 
-    <!-- FOTO DO TATUADOR E NOME -->
-    <div class="mb-8 flex flex-col items-center">
-        <!-- 
-        ========================================================================
-        PARA TROCAR A FOTO: Substitua o link que está dentro do "src=" abaixo 
-        pelo link da foto do tatuador que comprou o site.
-        ======================================================================== 
-        -->
-        <img src="https://images.unsplash.com/photo-1598371839696-5c5bb00bdc28?ixlib=rb-1.2.1&auto=format&fit=crop&w=300&q=80" 
-             alt="Foto do Artista" 
-             class="w-32 h-32 rounded-full object-cover border-4 border-red-600 shadow-[0_0_20px_rgba(220,38,38,0.4)] mb-4">
+    <nav class="absolute top-0 left-0 w-full p-6 sm:p-10 z-10 flex justify-between items-center">
+        <div class="text-xl font-extrabold tracking-[0.2em] uppercase">
+            MARCUS<span class="text-gray-500">.INK</span>
+        </div>
+        <div class="text-[0.65rem] tracking-[0.3em] text-gray-500 uppercase">
+            Powered by Nexus
+        </div>
+    </nav>
+
+    <header class="hero-section min-h-screen flex items-center px-6 sm:px-16 pt-32 pb-20">
         
-        <h2 class="text-sm font-bold tracking-[0.3em] text-red-600 uppercase">MARCUS.INK</h2>
-    </div>
+        <div class="max-w-3xl w-full">
+            
+            <div class="inline-block border border-gray-700 rounded-full px-4 py-1 mb-6">
+                <span class="text-xs tracking-widest uppercase text-gray-300">Agenda Aberta 2027</span>
+            </div>
+            
+            <h1 class="text-5xl sm:text-7xl font-extrabold leading-[1.1] tracking-tight mb-6">
+                A sua visão,<br>
+                <span class="font-art italic font-normal text-gray-400">nossa execução.</span>
+            </h1>
+            
+            <p class="text-gray-400 max-w-lg text-sm sm:text-base leading-relaxed mb-10">
+                Mais do que tinta na pele. Um estúdio especializado em projetos autorais, planeados meticulosamente para refletir a sua identidade.
+            </p>
+            
+            <div class="flex flex-col sm:flex-row gap-4">
+                
+                <a href="#galeria" class="btn-nexus px-8 py-4 text-xs font-bold uppercase tracking-widest text-center rounded">
+                    Ver Portefólio
+                </a>
+                
+                <a href="#link-do-taa-aqui" class="btn-taa px-8 py-4 text-xs font-bold text-white uppercase tracking-widest text-center rounded flex items-center justify-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    Falar com Assistente IA
+                </a>
 
-    <!-- FRASE PRINCIPAL EM DESTAQUE E VERMELHO -->
-    <h1 class="text-4xl md:text-6xl font-black mb-6 uppercase tracking-tighter leading-tight">
-        <span class="text-white">A sua pele,</span><br>
-        <span class="text-red-600 drop-shadow-md">nossa obra-prima.</span>
-    </h1>
-
-    <p class="text-gray-400 max-w-lg mb-12 text-lg font-light leading-relaxed">
-        Especialista em projetos autorais de alto impacto. Transformamos histórias em arte definitiva através de um processo exclusivo de design.
-    </p>
-
-    <!-- ÁREA DOS BOTÕES -->
-    <div class="flex flex-col w-full max-w-sm gap-4">
+            </div>
+        </div>
         
-        <!-- BOTÃO 1: O ESTÚDIO -->
-        <a href="#estudio" class="btn-solid w-full py-4 px-6 rounded uppercase tracking-widest font-bold text-sm shadow-lg">
-            Conheça Nosso Estúdio
-        </a>
-
-        <!-- 
-        ========================================================================
-        PARA COLOCAR O LINK DA IA (TAA): Substitua o "#" dentro do "href=" abaixo 
-        pelo link do assistente inteligente do tatuador.
-        ======================================================================== 
-        -->
-        <a href="#" class="btn-outline w-full py-3 px-6 rounded flex flex-col items-center justify-center shadow-lg">
-            <span class="uppercase tracking-widest font-bold text-sm mb-1">Fale com a Assistente IA</span>
-            <span class="text-xs opacity-80 font-normal lowercase tracking-wide">conte sua ideia e consulte valores</span>
-        </a>
-
-    </div>
+    </header>
 
 </body>
 </html>
