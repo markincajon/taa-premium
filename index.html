@@ -11,7 +11,7 @@
             background-color: #0a0a0a;
             color: #f3f4f6;
             font-family: 'Montserrat', sans-serif;
-            height: 200vh; /* Aumentado temporariamente só para você testar o scroll/queda do boneco */
+            height: 200vh; /* Altura aumentada para testar o scroll/queda */
         }
         .font-art { font-family: 'Playfair Display', serif; }
         
@@ -40,38 +40,37 @@
         .btn-taa:hover { border-color: #ffffff; background-color: rgba(255, 255, 255, 0.1); }
 
         /* ======================================= */
-        /* ANIMAÇÕES DO MASCOTE 3D                 */
+        /* WIDGET MÓVEL E INTERATIVO               */
         /* ======================================= */
         
-        .mascot-container { transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        #draggable-widget {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            z-index: 9999;
+            touch-action: none;
+            cursor: grab;
+        }
+        #draggable-widget:active { cursor: grabbing; }
+
+        .mascot-container { transition: transform 0.2s ease; }
         
-        /* Aceno da mão no balão */
+        /* Animações do Boneco */
         @keyframes wave {
             0%, 100% { transform: rotate(0deg); }
-            25% { transform: rotate(-20deg); }
-            75% { transform: rotate(20deg); }
+            25% { transform: rotate(-10deg); }
+            75% { transform: rotate(10deg); }
         }
-        .waving-hand {
-            display: inline-block;
-            transform-origin: bottom right;
-            animation: wave 1.5s infinite;
-        }
-        
-        /* Queda (Scroll) */
-        .falling { animation: fallShake 0.3s infinite; }
+        .waving { animation: wave 1.2s infinite ease-in-out; }
+
         @keyframes fallShake {
             0% { transform: translateY(0px) rotate(0deg); }
-            25% { transform: translateY(-15px) rotate(-15deg); }
-            50% { transform: translateY(-25px) rotate(15deg); }
-            75% { transform: translateY(-10px) rotate(-10deg); }
+            25% { transform: translateY(-15px) rotate(-10deg); }
+            50% { transform: translateY(-25px) rotate(10deg); }
+            75% { transform: translateY(-10px) rotate(-5deg); }
             100% { transform: translateY(0px) rotate(0deg); }
         }
-        
-        /* Pensativo */
-        .thinking {
-            transform: scale(1.05) rotate(5deg) translateY(-10px);
-            filter: brightness(1.2);
-        }
+        .falling { animation: fallShake 0.3s infinite; }
 
         .no-scrollbar::-webkit-scrollbar { display: none; }
     </style>
@@ -111,59 +110,58 @@
     </header>
 
     <!-- ========================================== -->
-    <!-- MASCOTE TAA 3D INTERATIVO                  -->
+    <!-- WIDGET DO AVATAR MÓVEL E INTERATIVO        -->
     <!-- ========================================== -->
-    <div class="fixed bottom-6 right-6 z-50 flex flex-col items-end">
+    <div id="draggable-widget" class="flex flex-col items-end">
         
-        <!-- Balão de Fala do Mascote -->
-        <div id="mascot-bubble" class="bg-gray-100 text-gray-900 text-xs font-bold py-3 px-4 rounded-2xl rounded-br-sm shadow-[0_10px_25px_rgba(0,0,0,0.5)] mb-3 max-w-[220px] transition-all transform origin-bottom-right">
-            <span id="bubble-icon" class="waving-hand text-base mr-1">👋</span>
-            <span id="bubble-text">Olá, <span id="greeting-time"></span>! Sou seu guia virtual.</span>
+        <!-- Balão de Fala: Cinza translúcido com texto branco em negrito -->
+        <div id="mascot-bubble" class="bg-zinc-900/90 border border-zinc-700 backdrop-blur-md text-white text-xs font-bold py-3 px-4 rounded-2xl rounded-br-sm shadow-2xl mb-3 max-w-[230px] transition-all transform origin-bottom-right">
+            <span id="bubble-text">👋 Olá! <span id="greeting-time"></span>! Clique aqui e fala comigo! Sou seu guia virtual.</span>
         </div>
 
-        <!-- O Boneco 3D -->
-        <button onclick="toggleChat()" id="taa-mascot" class="mascot-container relative w-24 h-28 focus:outline-none drop-shadow-2xl hover:scale-110">
-            <!-- IMAGEM PROVISÓRIA: Depois trocaremos pelo seu mascote oficial renderizado -->
-            <img src="https://cdn3d.iconscout.com/3d/premium/thumb/robot-4993685-4160759.png" class="w-full h-full object-contain" alt="Mascote 3D TAA">
-        </button>
+        <!-- O Avatar PNG em 3D -->
+        <div onclick="handleAvatarClick()" id="taa-mascot" class="mascot-container relative w-28 h-36 cursor-pointer drop-shadow-[0_15px_25px_rgba(0,0,0,0.8)] hover:scale-105">
+            <img src="a_clean_cutout_transparent_background_3d_cgi_chara.png" class="w-full h-full object-contain waving" alt="Avatar Tatuador 3D">
+            <div class="absolute bottom-2 right-2 w-3.5 h-3.5 bg-green-500 border-2 border-black rounded-full animate-pulse"></div>
+        </div>
 
-        <!-- Janela de Chat (Oculta por padrão) -->
-        <div id="chat-window" class="hidden absolute bottom-32 right-0 w-[300px] bg-[#111111] border border-gray-800 rounded-xl shadow-2xl overflow-hidden flex flex-col">
+        <!-- Janela de Chat / Informações do Estúdio -->
+        <div id="chat-window" class="hidden absolute bottom-40 right-0 w-[310px] bg-[#111111] border border-gray-800 rounded-xl shadow-2xl overflow-hidden flex flex-col">
             <div class="bg-gradient-to-r from-gray-900 to-black p-4 border-b border-gray-800 flex items-center justify-between">
                 <div class="flex items-center gap-3">
                     <div>
-                        <p class="text-xs font-bold text-white">Assistente TAA</p>
-                        <p class="text-[0.6rem] text-green-400">● Online agora</p>
+                        <p class="text-xs font-bold text-white">Assistente Virtual Nexus</p>
+                        <p class="text-[0.6rem] text-green-400">● Online - Tire suas dúvidas</p>
                     </div>
                 </div>
-                <button onclick="toggleChat()" class="text-gray-500 hover:text-white">
+                <button onclick="toggleChat(event)" class="text-gray-400 hover:text-white p-1">
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
             
-            <div class="p-4 h-48 overflow-y-auto no-scrollbar flex flex-col gap-3">
-                <div class="bg-gray-800/50 rounded-r-lg rounded-bl-lg p-3 max-w-[85%]">
-                    <p class="text-xs text-gray-200">Como posso te ajudar com o seu projeto hoje?</p>
+            <div class="p-4 h-52 overflow-y-auto no-scrollbar flex flex-col gap-3">
+                <div class="bg-gray-800/80 rounded-r-lg rounded-bl-lg p-3 max-w-[90%]">
+                    <p class="text-xs text-gray-200">Olá! Pode me arrastar pela tela para onde preferir. O que deseja saber?</p>
                 </div>
                 
-                <button onclick="showAnswer('endereco')" class="text-left bg-transparent border border-gray-700 hover:border-gray-500 text-gray-300 text-xs p-2 rounded w-full transition">📍 Onde fica o estúdio?</button>
-                <button onclick="showAnswer('portfolio')" class="text-left bg-transparent border border-gray-700 hover:border-gray-500 text-gray-300 text-xs p-2 rounded w-full transition">🖼️ Onde vejo as tatuagens?</button>
-                <button onclick="showAnswer('orcamento')" class="text-left bg-transparent border border-gray-700 hover:border-gray-500 text-gray-300 text-xs p-2 rounded w-full transition">💰 Como faço um orçamento?</button>
+                <button onclick="showAnswer('endereco')" class="text-left bg-transparent border border-gray-700 hover:border-gray-500 text-gray-300 text-xs p-2.5 rounded w-full transition">📍 Onde fica o estúdio?</button>
+                <button onclick="showAnswer('telefone')" class="text-left bg-transparent border border-gray-700 hover:border-gray-500 text-gray-300 text-xs p-2.5 rounded w-full transition">📞 Qual o telefone de contato?</button>
+                <button onclick="showAnswer('portfolio')" class="text-left bg-transparent border border-gray-700 hover:border-gray-500 text-gray-300 text-xs p-2.5 rounded w-full transition">🖼️ Onde vejo as tatuagens?</button>
 
-                <div id="chat-resposta" class="hidden bg-gray-800/50 rounded-r-lg rounded-bl-lg p-3 max-w-[85%] mt-2">
+                <div id="chat-resposta" class="hidden bg-gray-800/80 rounded-r-lg rounded-bl-lg p-3 max-w-[90%] mt-2">
                     <p id="resposta-texto" class="text-xs text-gray-200"></p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- CÉREBRO DA IA: Controla horas, scroll e pensamentos -->
+    <!-- CÉREBRO INTERATIVO: Horas, Scroll, Frases e Arraste (Drag) -->
     <script>
+        const widget = document.getElementById('draggable-widget');
         const mascot = document.getElementById('taa-mascot');
         const bubbleText = document.getElementById('bubble-text');
-        const bubbleIcon = document.getElementById('bubble-icon');
         
-        // 1. Saudação baseada na hora local
+        // 1. Saudação por Horário
         function updateGreeting() {
             const hour = new Date().getHours();
             let msg = "Boa noite";
@@ -175,46 +173,83 @@
         }
         updateGreeting();
 
-        // 2. Reação ao Scroll (Queda)
+        // 2. Sistema de Arrastar na Tela (Mouse e Touch para Telemóvel)
+        let isDragging = false;
+        let startX, startY, initialX, initialY;
+
+        widget.addEventListener('pointerdown', (e) => {
+            isDragging = true;
+            startX = e.clientX;
+            startY = e.clientY;
+            const rect = widget.getBoundingClientRect();
+            initialX = window.innerWidth - rect.right;
+            initialY = window.innerHeight - rect.bottom;
+            widget.setPointerCapture(e.pointerId);
+            bubbleText.innerText = "✨ Opa! Estou a mover-me!";
+        });
+
+        widget.addEventListener('pointermove', (e) => {
+            if (!isDragging) return;
+            const dx = e.clientX - startX;
+            const dy = e.clientY - startY;
+            widget.style.right = (initialX - dx) + 'px';
+            widget.style.bottom = (initialY - dy) + 'px';
+        });
+
+        widget.addEventListener('pointerup', (e) => {
+            if (!isDragging) return;
+            isDragging = false;
+            widget.releasePointerCapture(e.pointerId);
+            bubbleText.innerHTML = "👋 Olá! <span id='greeting-time'></span>! Clique aqui e fala comigo!";
+            updateGreeting();
+        });
+
+        // 3. Reação ao Scroll (Queda)
         let scrollTimer;
         window.addEventListener('scroll', () => {
             if(!mascot.classList.contains('falling')) {
                 mascot.classList.add('falling');
-                bubbleIcon.innerText = "😱";
-                bubbleIcon.classList.remove('waving-hand');
-                bubbleText.innerText = "Uooou! Segura aí!";
+                mascot.querySelector('img').classList.remove('waving');
+                bubbleText.innerText = "😱 Opa! Cuidado com a queda!";
             }
             
             clearTimeout(scrollTimer);
             scrollTimer = setTimeout(() => {
                 mascot.classList.remove('falling');
-                bubbleIcon.innerText = "👋";
-                bubbleIcon.classList.add('waving-hand');
-                bubbleText.innerHTML = "Olá, <span id='greeting-time'></span>! Sou seu guia virtual.";
+                mascot.querySelector('img').classList.add('waving');
+                bubbleText.innerHTML = "👋 Olá! <span id='greeting-time'></span>! Clique aqui e fala comigo!";
                 updateGreeting();
-            }, 500);
+            }, 600);
         });
 
-        // 3. Reação Pensativa Aleatória (a cada 10 segundos)
+        // 4. Frases Automáticas Interativas (A cada 8 segundos)
+        const frasesAtencao = [
+            "👉 Clique aqui no meu peito para falar comigo!",
+            "✨ Sou o seu assistente virtual neste site!",
+            "💡 Dúvidas sobre agendamento? Clica em mim!",
+            "👋 Olá! Estou aqui para te ajudar no estúdio!"
+        ];
+        
         setInterval(() => {
-            if(!mascot.classList.contains('falling') && document.getElementById('chat-window').classList.contains('hidden')) {
-                mascot.classList.add('thinking');
-                bubbleIcon.innerText = "🤔";
-                bubbleIcon.classList.remove('waving-hand');
-                bubbleText.innerText = "Hmm... Qual será sua próxima tattoo?";
+            if(!isDragging && document.getElementById('chat-window').classList.contains('hidden') && !mascot.classList.contains('falling')) {
+                const randomFrase = frasesAtencao[Math.floor(Math.random() * frasesAtencao.length)];
+                bubbleText.innerText = randomFrase;
                 
                 setTimeout(() => {
-                    mascot.classList.remove('thinking');
-                    bubbleIcon.innerText = "👋";
-                    bubbleIcon.classList.add('waving-hand');
-                    bubbleText.innerHTML = "Olá, <span id='greeting-time'></span>! Sou seu guia virtual.";
+                    bubbleText.innerHTML = "👋 Olá! <span id='greeting-time'></span>! Clique aqui e fala comigo!";
                     updateGreeting();
                 }, 4000);
             }
-        }, 10000);
+        }, 9000);
 
-        // 4. Controles do Chat
-        function toggleChat() {
+        // 5. Controles do Chat / Respostas Rápidas
+        function handleAvatarClick() {
+            // Se foi arrastado agora pouco, não abre o chat acidentalmente
+            toggleChat();
+        }
+
+        function toggleChat(e) {
+            if(e) e.stopPropagation();
             const chat = document.getElementById('chat-window');
             chat.classList.toggle('hidden');
         }
@@ -224,9 +259,13 @@
             const respostaTexto = document.getElementById('resposta-texto');
             respostaBox.classList.remove('hidden');
             
-            if (tipo === 'endereco') respostaTexto.innerHTML = "Estamos em Dublin. O endereço exato é enviado após o agendamento!";
-            else if (tipo === 'portfolio') respostaTexto.innerHTML = "Suba um pouco a tela e clique no botão branco <b>'VER PORTEFÓLIO'</b>.";
-            else if (tipo === 'orcamento') respostaTexto.innerHTML = "Para orçamentos detalhados, nossa IA central fará o atendimento logo abaixo.";
+            if (tipo === 'endereco') {
+                respostaTexto.innerHTML = "📍 O estúdio fica localizado no coração de Dublin. O endereço exato é enviado após a confirmação do projeto.";
+            } else if (tipo === 'telefone') {
+                respostaTexto.innerHTML = "📞 Contacto direto via WhatsApp corporativo da Nexus / Estúdio disponível após iniciar o agendamento.";
+            } else if (tipo === 'portfolio') {
+                respostaTexto.innerHTML = "🖼️ Suba um pouco a página e explore todas as artes e projetos autorais disponíveis no portefólio.";
+            }
             
             const chatBody = respostaBox.parentElement;
             setTimeout(() => { chatBody.scrollTop = chatBody.scrollHeight; }, 50);
