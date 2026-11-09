@@ -1,290 +1,937 @@
+
 <!DOCTYPE html>
-<html lang="pt-BR" class="scroll-smooth">
+<html lang="en" class="scroll-smooth">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nexus Template | Tatuador Premium</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;800&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
-    <style>
-        body {
-            background-color: #0a0a0a;
-            color: #f3f4f6;
-            font-family: 'Montserrat', sans-serif;
-            height: 200vh;
-        }
-        .font-art { font-family: 'Playfair Display', serif; }
-        
-        .hero-section {
-            background-image: 
-                linear-gradient(to bottom, rgba(10,10,10,0.1) 0%, rgba(10,10,10,0.4) 40%, #0a0a0a 85%, #0a0a0a 100%),
-                url('IMG_20261109_004046.jpg');
-            background-size: cover;
-            background-position: center top;
-            background-repeat: no-repeat;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#090909">
 
-        .btn-nexus {
-            background-color: #ffffff;
-            color: #000000;
-            transition: all 0.3s ease;
-        }
-        .btn-nexus:hover { background-color: #d1d5db; transform: translateY(-2px); }
-        
-        .btn-taa {
-            background-color: transparent;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            backdrop-filter: blur(8px);
-            transition: all 0.3s ease;
-        }
-        .btn-taa:hover { border-color: #ffffff; background-color: rgba(255, 255, 255, 0.1); }
+  <title>Marcus.INK | Premium Tattoo Artist Dublin</title>
+  <meta name="description" content="Discover custom tattoo art by Marcus.INK in Dublin. Explore the portfolio and enquire about your next tattoo project.">
 
-        /* ======================================= */
-        /* ANIMAÇÕES FLUIDAS E REALISTAS           */
-        /* ======================================= */
-        
-        #draggable-widget {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 9999;
-            touch-action: none;
-            cursor: grab;
-        }
-        #draggable-widget:active { cursor: grabbing; }
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,500;0,600;1,500&display=swap" rel="stylesheet">
 
-        /* Respiração natural (em pé, sem tique-taque) */
-        @keyframes breathe {
-            0%, 100% { transform: translateY(0px) scale(1); }
-            50% { transform: translateY(-6px) scale(1.02); }
-        }
-        .standing-alive { animation: breathe 3s ease-in-out infinite; }
+  <script src="https://cdn.tailwindcss.com"></script>
 
-        /* Movimento de Curva / Apontar para o peito */
-        @keyframes pointChest {
-            0% { transform: scale(1) rotate(0deg); }
-            50% { transform: scale(1.08) translateY(-4px) rotate(-2deg); }
-            100% { transform: scale(1) rotate(0deg); }
-        }
-        .pointing { animation: pointChest 0.8s ease-in-out; }
+  <style>
+    :root {
+      --bg: #090909;
+      --surface: #111111;
+      --surface-light: #191919;
+      --white: #f4f2ee;
+      --muted: #999999;
+      --accent: #c64a43;
+      --line: rgba(255,255,255,.10);
+    }
 
-        /* Efeito de Queda Realista (Inclinação e tremor) */
-        @keyframes fallReaction {
-            0% { transform: translateY(0px) rotate(0deg); }
-            20% { transform: translateY(-10px) rotate(8deg); }
-            40% { transform: translateY(-20px) rotate(-12deg); }
-            60% { transform: translateY(-10px) rotate(6deg); }
-            80% { transform: translateY(-5px) rotate(-3deg); }
-            100% { transform: translateY(0px) rotate(0deg); }
-        }
-        .falling { animation: fallReaction 0.5s ease-in-out; }
+    * { box-sizing: border-box; }
 
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-    </style>
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--white);
+      font-family: 'DM Sans', sans-serif;
+      overflow-x: hidden;
+    }
+
+    body, button, input, textarea, select {
+      font-family: 'DM Sans', sans-serif;
+    }
+
+    button, a { -webkit-tap-highlight-color: transparent; }
+
+    a { text-decoration: none; color: inherit; }
+
+    .font-art {
+      font-family: 'Playfair Display', serif;
+    }
+
+    .accent { color: var(--accent); }
+
+    .section-label {
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .32em;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .section-title {
+      font-size: clamp(36px, 6vw, 68px);
+      line-height: 1.08;
+      letter-spacing: -.045em;
+      font-weight: 700;
+    }
+
+    .container-main {
+      width: min(1200px, calc(100% - 48px));
+      margin: auto;
+    }
+
+    /* NAVIGATION */
+
+    .navbar {
+      position: absolute;
+      z-index: 20;
+      top: 0;
+      left: 0;
+      width: 100%;
+      padding: 28px 5%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 1px solid rgba(255,255,255,.07);
+    }
+
+    .brand {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: .12em;
+    }
+
+    .brand span { color: var(--accent); }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 35px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      color: #c5c5c5;
+    }
+
+    .nav-links a:hover { color: white; }
+
+    .nav-cta {
+      padding: 13px 22px;
+      border: 1px solid rgba(255,255,255,.35);
+      transition: .3s;
+    }
+
+    .nav-cta:hover {
+      background: white;
+      color: black;
+    }
+
+    /* HERO */
+
+    .hero {
+      min-height: 850px;
+      height: 100svh;
+      max-height: 1050px;
+      position: relative;
+      display: flex;
+      align-items: flex-end;
+      padding: 160px 8% 100px;
+      background:
+        linear-gradient(90deg,
+          rgba(0,0,0,.88) 0%,
+          rgba(0,0,0,.55) 43%,
+          rgba(0,0,0,.12) 100%),
+        linear-gradient(to top,
+          var(--bg) 0%,
+          transparent 38%),
+        url('IMG_20261109_004046.jpg') center 25% / cover no-repeat;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 760px;
+    }
+
+    .hero-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 15px;
+      border: 1px solid rgba(255,255,255,.25);
+      background: rgba(0,0,0,.3);
+      backdrop-filter: blur(10px);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: .2em;
+      margin-bottom: 28px;
+    }
+
+    .hero-tag::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: var(--accent);
+      box-shadow: 0 0 12px var(--accent);
+    }
+
+    .hero h1 {
+      font-size: clamp(52px, 8vw, 105px);
+      line-height: .99;
+      letter-spacing: -.06em;
+      margin: 0 0 28px;
+      font-weight: 800;
+    }
+
+    .hero h1 em {
+      font-family: 'Playfair Display', serif;
+      font-weight: 500;
+      color: #c7c3bd;
+    }
+
+    .hero-description {
+      max-width: 510px;
+      color: #c4c4c4;
+      font-size: 14px;
+      line-height: 1.9;
+      margin-bottom: 38px;
+    }
+
+    .primary-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 17px 30px;
+      background: var(--white);
+      color: #090909;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      transition: .3s;
+    }
+
+    .primary-button:hover {
+      background: var(--accent);
+      color: white;
+      transform: translateY(-3px);
+    }
+
+    .secondary-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 17px 30px;
+      border: 1px solid rgba(255,255,255,.35);
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: .16em;
+      text-transform: uppercase;
+      transition: .3s;
+    }
+
+    .secondary-button:hover {
+      border-color: white;
+      background: rgba(255,255,255,.08);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+    }
+
+    .hero-bottom {
+      position: absolute;
+      bottom: 38px;
+      right: 6%;
+      font-size: 9px;
+      letter-spacing: .25em;
+      color: #999;
+      text-transform: uppercase;
+    }
+
+    /* ARTIST INTRO */
+
+    .artist-section {
+      padding: 130px 0;
+      background: var(--bg);
+    }
+
+    .artist-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 90px;
+      align-items: center;
+    }
+
+    .artist-photo {
+      min-height: 570px;
+      position: relative;
+      overflow: hidden;
+      background: #171717;
+    }
+
+    .artist-photo img {
+      width: 100%;
+      height: 100%;
+      min-height: 570px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .artist-photo::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border: 1px solid rgba(255,255,255,.12);
+      pointer-events: none;
+    }
+
+    .artist-copy p {
+      font-size: 14px;
+      line-height: 2;
+      color: var(--muted);
+      margin: 25px 0;
+    }
+
+    .artist-signature {
+      font-family: 'Playfair Display', serif;
+      font-style: italic;
+      font-size: 28px;
+      color: #ddd;
+      margin-top: 35px;
+    }
+
+    /* PORTFOLIO */
+
+    .portfolio-section {
+      padding: 120px 0;
+      background: #101010;
+    }
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 30px;
+      margin-bottom: 55px;
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .portfolio-card {
+      position: relative;
+      min-height: 380px;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse at 50% 30%, #383838, #151515 70%);
+    }
+
+    .portfolio-card img {
+      width: 100%;
+      height: 100%;
+      min-height: 380px;
+      object-fit: cover;
+      display: block;
+      transition: transform .7s ease;
+    }
+
+    .portfolio-card:hover img { transform: scale(1.06); }
+
+    .portfolio-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: flex-end;
+      padding: 25px;
+      background: linear-gradient(transparent 40%, rgba(0,0,0,.8));
+      pointer-events: none;
+    }
+
+    .portfolio-overlay h3 {
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: .04em;
+    }
+
+    .portfolio-overlay span {
+      font-size: 9px;
+      letter-spacing: .2em;
+      color: #ccc;
+      text-transform: uppercase;
+    }
+
+    /* STYLES */
+
+    .styles-section {
+      padding: 120px 0;
+    }
+
+    .styles-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      margin-top: 55px;
+    }
+
+    .style-item {
+      padding: 40px 22px;
+      border-right: 1px solid var(--line);
+      transition: .3s;
+    }
+
+    .style-item:last-child { border-right: 0; }
+
+    .style-item:hover {
+      background: #151515;
+    }
+
+    .style-number {
+      font-size: 10px;
+      color: var(--accent);
+      letter-spacing: .2em;
+    }
+
+    .style-item h3 {
+      margin-top: 28px;
+      font-size: 19px;
+      font-weight: 700;
+    }
+
+    .style-item p {
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-top: 12px;
+    }
+
+    /* EXPERIENCE */
+
+    .experience-section {
+      padding: 120px 0;
+      background: #111;
+    }
+
+    .experience-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 70px;
+      align-items: center;
+    }
+
+    .experience-image {
+      height: 550px;
+      overflow: hidden;
+      background: #222;
+    }
+
+    .experience-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .experience-copy p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 2;
+      margin: 25px 0;
+    }
+
+    .experience-point {
+      display: flex;
+      gap: 18px;
+      padding: 20px 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .experience-point span {
+      color: var(--accent);
+      font-size: 11px;
+    }
+
+    .experience-point strong {
+      font-size: 12px;
+      letter-spacing: .05em;
+    }
+
+    /* BOOKING */
+
+    .booking-section {
+      padding: 130px 0;
+    }
+
+    .booking-grid {
+      display: grid;
+      grid-template-columns: .8fr 1.2fr;
+      gap: 100px;
+    }
+
+    .booking-copy p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 2;
+      margin-top: 25px;
+    }
+
+    .booking-form {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 22px;
+    }
+
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .form-field.full { grid-column: 1 / -1; }
+
+    .form-field label {
+      font-size: 9px;
+      text-transform: uppercase;
+      letter-spacing: .2em;
+      color: #aaa;
+    }
+
+    .form-field input,
+    .form-field textarea,
+    .form-field select {
+      width: 100%;
+      padding: 15px;
+      border: 1px solid var(--line);
+      outline: none;
+      background: #121212;
+      color: white;
+      font-size: 12px;
+      border-radius: 0;
+    }
+
+    .form-field input:focus,
+    .form-field textarea:focus,
+    .form-field select:focus {
+      border-color: var(--accent);
+    }
+
+    .form-field textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    .form-field select option { background: #111; }
+
+    /* FOOTER */
+
+    footer {
+      padding: 50px 0;
+      border-top: 1px solid var(--line);
+      background: #080808;
+    }
+
+    .footer-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 30px;
+    }
+
+    .footer-copy {
+      font-size: 10px;
+      color: #777;
+      letter-spacing: .12em;
+    }
+
+    /* AVATAR WIDGET */
+
+    #avatar-widget {
+      position: fixed;
+      z-index: 9999;
+      right: 25px;
+      bottom: 22px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      width: 175px;
+      touch-action: none;
+      user-select: none;
+    }
+
+    #avatar-bubble {
+      position: relative;
+      max-width: 230px;
+      margin-bottom: 10px;
+      padding: 14px 17px;
+      background: rgba(22,22,22,.96);
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 15px 15px 3px 15px;
+      color: white;
+      font-size: 11px;
+      font-weight: 600;
+      line-height: 1.6;
+      box-shadow: 0 10px 35px rgba(0,0,0,.4);
+      backdrop-filter: blur(15px);
+      animation: bubbleIn .5s ease both;
+      cursor: pointer;
+    }
+
+    #avatar-bubble::after {
+      content: '';
+      position: absolute;
+      right: 14px;
+      bottom: -6px;
+      width: 10px;
+      height: 10px;
+      background: #161616;
+      border-right: 1px solid rgba(255,255,255,.16);
+      border-bottom: 1px solid rgba(255,255,255,.16);
+      transform: rotate(45deg);
+    }
+
+    @keyframes bubbleIn {
+      from { opacity: 0; transform: translateY(10px) scale(.95); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    #avatar-button {
+      position: relative;
+      display: block;
+      width: 155px;
+      height: 230px;
+      padding: 0;
+      border: 0;
+      background: transparent;
+      cursor: grab;
+      touch-action: none;
+      -webkit-user-select: none;
+    }
+
+    #avatar-button:active { cursor: grabbing; }
+
+    #avatar-image {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      display: block;
+      transform-origin: 50% 85%;
+      filter: drop-shadow(0 12px 18px rgba(0,0,0,.65));
+      pointer-events: none;
+      animation: breathe 3.5s ease-in-out infinite;
+    }
+
+    @keyframes breathe {
+      0%,100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-5px) scale(1.012); }
+    }
+
+    /* Saudações: movimento suave do personagem inteiro.
+       Para braços articulados, será necessário rigging ou imagens em camadas. */
+
+    #avatar-image.wave {
+      animation: waveBody .8s ease-in-out;
+    }
+
+    @keyframes waveBody {
+      0% { transform: rotate(0deg) translateY(0); }
+      25% { transform: rotate(-4deg) translateY(-5px); }
+      50% { transform: rotate(4deg) translateY(-7px); }
+      75% { transform: rotate(-3deg) translateY(-3px); }
+      100% { transform: rotate(0deg) translateY(0); }
+    }
+
+    #avatar-image.point {
+      animation: pointBody 1s ease-in-out;
+    }
+
+    @keyframes pointBody {
+      0% { transform: translateY(0) scale(1); }
+      20% { transform: translateY(-8px) scale(1.04) rotate(-2deg); }
+      40% { transform: translateY(0) scale(1.01) rotate(2deg); }
+      60% { transform: translateY(-6px) scale(1.04) rotate(-2deg); }
+      80% { transform: translateY(0) scale(1.01) rotate(1deg); }
+      100% { transform: translateY(0) scale(1); }
+    }
+
+    .avatar-status {
+      position: absolute;
+      bottom: 20px;
+      right: 12px;
+      width: 13px;
+      height: 13px;
+      border: 2px solid #090909;
+      border-radius: 50%;
+      background: #40d67b;
+      box-shadow: 0 0 12px rgba(64,214,123,.6);
+      pointer-events: none;
+    }
+
+    /* CHAT */
+
+    #chat-window {
+      position: absolute;
+      right: 0;
+      bottom: 265px;
+      width: min(340px, calc(100vw - 35px));
+      background: #111;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 13px;
+      overflow: hidden;
+      box-shadow: 0 20px 70px rgba(0,0,0,.65);
+      display: none;
+      flex-direction: column;
+      touch-action: pan-y;
+      user-select: text;
+    }
+
+    #chat-window.open {
+      display: flex;
+      animation: chatIn .25s ease both;
+    }
+
+    @keyframes chatIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .chat-header {
+      padding: 17px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #191919;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .chat-title {
+      font-size: 12px;
+      font-weight: 800;
+    }
+
+    .chat-online {
+      margin-top: 5px;
+      font-size: 9px;
+      color: #50d58a;
+    }
+
+    .chat-close {
+      border: 0;
+      background: transparent;
+      color: #aaa;
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    .chat-body {
+      padding: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-height: 300px;
+      overflow-y: auto;
+    }
+
+    .chat-message {
+      padding: 12px;
+      border-radius: 3px 12px 12px 12px;
+      background: #242424;
+      color: #e5e5e5;
+      font-size: 11px;
+      line-height: 1.7;
+      max-width: 95%;
+    }
+
+    .chat-option {
+      text-align: left;
+      padding: 12px;
+      border: 1px solid #353535;
+      background: transparent;
+      color: #ddd;
+      font-size: 10px;
+      cursor: pointer;
+      transition: .2s;
+    }
+
+    .chat-option:hover {
+      background: #222;
+      border-color: var(--accent);
+    }
+
+    .chat-response {
+      display: none;
+      padding: 12px;
+      background: #202020;
+      border-left: 2px solid var(--accent);
+      color: #ddd;
+      font-size: 11px;
+      line-height: 1.7;
+    }
+
+    .chat-footer {
+      padding: 14px;
+      border-top: 1px solid var(--line);
+    }
+
+    .chat-footer a {
+      display: block;
+      text-align: center;
+      padding: 13px;
+      background: white;
+      color: black;
+      font-size: 9px;
+      font-weight: 800;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    /* MOBILE */
+
+    @media(max-width: 850px) {
+      .nav-links { gap: 17px; }
+      .nav-links a:not(.nav-cta) { display: none; }
+
+      .hero {
+        min-height: 760px;
+        padding: 150px 7% 100px;
+        background-position: 58% center;
+      }
+
+      .artist-grid,
+      .experience-grid,
+      .booking-grid {
+        grid-template-columns: 1fr;
+        gap: 45px;
+      }
+
+      .artist-photo { min-height: 430px; }
+      .artist-photo img { min-height: 430px; }
+
+      .portfolio-grid { grid-template-columns: repeat(2,1fr); }
+
+      .styles-grid { grid-template-columns: repeat(2,1fr); }
+
+      .style-item:nth-child(2) { border-right: 0; }
+
+      .style-item:nth-child(-n+2) {
+        border-bottom: 1px solid var(--line);
+      }
+
+      .experience-image { height: 430px; }
+      .booking-grid { gap: 30px; }
+    }
+
+    @media(max-width: 520px) {
+      .container-main { width: calc(100% - 36px); }
+
+      .navbar {
+        padding: 22px 20px;
+      }
+
+      .brand { font-size: 18px; }
+
+      .nav-cta {
+        padding: 11px 13px;
+        font-size: 8px;
+      }
+
+      .hero {
+        min-height: 750px;
+        height: 92svh;
+        padding: 130px 22px 100px;
+        background-position: 59% center;
+      }
+
+      .hero h1 { font-size: 55px; }
+
+      .hero-description {
+        font-size: 12px;
+        max-width: 320px;
+      }
+
+      .hero-bottom { display: none; }
+
+      .section-header {
+        display: block;
+      }
+
+      .artist-section,
+      .portfolio-section,
+      .styles-section,
+      .experience-section,
+      .booking-section {
+        padding: 85px 0;
+      }
+
+      .portfolio-grid { grid-template-columns: 1fr 1fr; gap: 9px; }
+
+      .portfolio-card,
+      .portfolio-card img { min-height: 240px; }
+
+      .portfolio-overlay { padding: 12px; }
+      .portfolio-overlay h3 { font-size: 12px; }
+
+      .portfolio-overlay span { font-size: 8px; }
+
+      .booking-form { grid-template-columns: 1fr; }
+
+      .form-field.full { grid-column: auto; }
+
+      .footer-content {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      #avatar-widget {
+        right: 10px;
+        bottom: 8px;
+        width: 115px;
+      }
+
+      #avatar-button {
+        width: 105px;
+        height: 158px;
+      }
+
+      #avatar-bubble {
+        max-width: 185px;
+        font-size: 10px;
+        padding: 11px 13px;
+      }
+
+      #chat-window {
+        bottom: 180px;
+        right: 0;
+      }
+    }
+
+    @media(prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        scroll-behavior: auto !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
 </head>
-<body class="antialiased selection:bg-gray-700 selection:text-white relative">
 
-    <nav class="absolute top-0 left-0 w-full p-6 sm:p-10 z-10 flex justify-between items-center bg-gradient-to-b from-black/80 to-transparent pb-16">
-        <div class="text-xl font-extrabold tracking-[0.2em] uppercase drop-shadow-lg">
-            MARCUS<span class="text-gray-400">.INK</span>
-        </div>
-        <div class="text-[0.65rem] tracking-[0.3em] text-gray-300 uppercase font-bold drop-shadow-lg">
-            Powered by Nexus
-        </div>
-    </nav>
+<body>
 
-    <header class="hero-section h-screen flex flex-col justify-end px-6 sm:px-16 pt-32 pb-12 sm:pb-20">
-        <div class="max-w-3xl w-full">
-            <div class="inline-block border border-gray-700 rounded-full px-4 py-1 mb-4 bg-black/40 backdrop-blur-sm">
-                <span class="text-xs tracking-widest uppercase text-gray-300">Agenda Aberta 2027</span>
-            </div>
-            
-            <h1 class="text-5xl sm:text-7xl font-extrabold leading-[1.1] tracking-tight mb-4 drop-shadow-xl">
-                A sua visão,<br>
-                <span class="font-art italic font-normal text-gray-400">nossa execução.</span>
-            </h1>
-            
-            <p class="text-gray-300 max-w-lg text-sm sm:text-base leading-relaxed mb-8 drop-shadow-md">
-                Mais do que tinta na pele. Um estúdio especializado em projetos autorais, planeados meticulosamente para refletir a sua identidade.
-            </p>
-            
-            <div class="flex flex-col sm:flex-row gap-4">
-                <a href="#galeria" class="btn-nexus px-8 py-4 text-xs font-bold uppercase tracking-widest text-center rounded shadow-lg">
-                    Ver Portefólio
-                </a>
-            </div>
-        </div>
-    </header>
+  <!-- NAVIGATION -->
 
-    <!-- ========================================== -->
-    <!-- WIDGET DO AVATAR MÓVEL E INTERATIVO        -->
-    <!-- ========================================== -->
-    <div id="draggable-widget" class="flex flex-col items-end">
-        
-        <!-- Balão de Fala Translúcido -->
-        <div id="mascot-bubble" class="bg-zinc-900/90 border border-zinc-700 backdrop-blur-md text-white text-xs font-bold py-3 px-4 rounded-2xl rounded-br-sm shadow-2xl mb-3 max-w-[230px] transition-all transform origin-bottom-right">
-            <span id="bubble-text">👋 Olá! <span id="greeting-time"></span>! Clique aqui e fala comigo! Sou seu guia virtual.</span>
-        </div>
+  <nav class="navbar">
+    <a href="#" class="brand">MARCUS<span>.INK</span></a>
 
-        <!-- O Avatar PNG em 3D -->
-        <div onclick="handleAvatarClick()" id="taa-mascot" class="relative w-28 h-36 cursor-pointer drop-shadow-[0_15px_25px_rgba(0,0,0,0.8)] hover:scale-105 standing-alive">
-            <img src="a_clean_cutout_transparent_background_3d_cgi_chara.png" class="w-full h-full object-contain" alt="Avatar Tatuador 3D">
-            <div class="absolute bottom-2 right-2 w-3.5 h-3.5 bg-green-500 border-2 border-black rounded-full animate-pulse"></div>
-        </div>
-
-        <!-- Janela de Chat / Informações do Estúdio -->
-        <div id="chat-window" class="hidden absolute bottom-40 right-0 w-[310px] bg-[#111111] border border-gray-800 rounded-xl shadow-2xl overflow-hidden flex flex-col">
-            <div class="bg-gradient-to-r from-gray-900 to-black p-4 border-b border-gray-800 flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div>
-                        <p class="text-xs font-bold text-white">Assistente Virtual Nexus</p>
-                        <p class="text-[0.6rem] text-green-400">● Online - Tire suas dúvidas</p>
-                    </div>
-                </div>
-                <button onclick="toggleChat(event)" class="text-gray-400 hover:text-white p-1">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                </button>
-            </div>
-            
-            <div class="p-4 h-52 overflow-y-auto no-scrollbar flex flex-col gap-3">
-                <div class="bg-gray-800/80 rounded-r-lg rounded-bl-lg p-3 max-w-[90%]">
-                    <p class="text-xs text-gray-200">Olá! Pode me arrastar pela tela para onde preferir. O que deseja saber?</p>
-                </div>
-                
-                <button onclick="showAnswer('endereco')" class="text-left bg-transparent border border-gray-700 hover:border-gray-500 text-gray-300 text-xs p-2.5 rounded w-full transition">📍 Onde fica o estúdio?</button>
-                <button onclick="showAnswer('telefone')" class="text-left bg-transparent border border-gray-700 hover:border-gray-500 text-gray-300 text-xs p-2.5 rounded w-full transition">📞 Qual o telefone de contato?</button>
-                <button onclick="showAnswer('portfolio')" class="text-left bg-transparent border border-gray-700 hover:border-gray-500 text-gray-300 text-xs p-2.5 rounded w-full transition">🖼️ Onde vejo as tatuagens?</button>
-
-                <div id="chat-resposta" class="hidden bg-gray-800/80 rounded-r-lg rounded-bl-lg p-3 max-w-[90%] mt-2">
-                    <p id="resposta-texto" class="text-xs text-gray-200"></p>
-                </div>
-            </div>
-        </div>
+    <div class="nav-links">
+      <a href="#artist">The Artist</a>
+      <a href="#portfolio">Portfolio</a>
+      <a href="#styles">Styles</a>
+      <a href="#booking" class="nav-cta">Enquire Now</a>
     </div>
+  </nav>
 
-    <!-- CÉREBRO INTERATIVO -->
-    <script>
-        const widget = document.getElementById('draggable-widget');
-        const mascot = document.getElementById('taa-mascot');
-        const bubbleText = document.getElementById('bubble-text');
-        
-        // 1. Saudação por Horário
-        function updateGreeting() {
-            const hour = new Date().getHours();
-            let msg = "Boa noite";
-            if (hour >= 5 && hour < 12) msg = "Bom dia";
-            else if (hour >= 12 && hour < 18) msg = "Boa tarde";
-            
-            const timeSpan = document.getElementById('greeting-time');
-            if(timeSpan) timeSpan.innerText = msg;
-        }
-        updateGreeting();
+  <!-- HERO -->
 
-        // 2. Sistema de Arrastar (Drag & Drop)
-        let isDragging = false;
-        let startX, startY, initialX, initialY;
+  <header class="hero">
+    <div class="hero-content">
 
-        widget.addEventListener('pointerdown', (e) => {
-            isDragging = true;
-            startX = e.clientX;
-            startY = e.clientY;
-            const rect = widget.getBoundingClientRect();
-            initialX = window.innerWidth - rect.right;
-            initialY = window.innerHeight - rect.bottom;
-            widget.setPointerCapture(e.pointerId);
-            bubbleText.innerText = "✨ Opa! Estou a mover-me!";
-        });
-
-        widget.addEventListener('pointermove', (e) => {
-            if (!isDragging) return;
-            const dx = e.clientX - startX;
-            const dy = e.clientY - startY;
-            widget.style.right = (initialX - dx) + 'px';
-            widget.style.bottom = (initialY - dy) + 'px';
-        });
-
-        widget.addEventListener('pointerup', (e) => {
-            if (!isDragging) return;
-            isDragging = false;
-            widget.releasePointerCapture(e.pointerId);
-            bubbleText.innerHTML = "👋 Olá! <span id='greeting-time'></span>! Clique aqui e fala comigo!";
-            updateGreeting();
-        });
-
-        // 3. Reação ao Scroll (Queda real e curva no corpo)
-        let scrollTimer;
-        window.addEventListener('scroll', () => {
-            if(!mascot.classList.contains('falling')) {
-                mascot.classList.remove('standing-alive', 'pointing');
-                mascot.classList.add('falling');
-                bubbleText.innerText = "😱 Opa! Segura firme!";
-            }
-            
-            clearTimeout(scrollTimer);
-            scrollTimer = setTimeout(() => {
-                mascot.classList.remove('falling');
-                mascot.classList.add('standing-alive');
-                bubbleText.innerHTML = "👋 Olá! <span id='greeting-time'></span>! Clique aqui e fala comigo!";
-                updateGreeting();
-            }, 600);
-        });
-
-        // 4. Frases Inteligentes com Movimento de Apontar para o Peito
-        const dialogos = [
-            { texto: "👉 Clique aqui no meu peito para falar comigo!", animar: true },
-            { texto: "✨ Sou o seu guia virtual neste site!", animar: false },
-            { texto: "💡 Dúvidas sobre agendamento? Clica em mim!", animar: true },
-            { texto: "👋 Olá! Estou aqui para te ajudar no estúdio!", animar: false }
-        ];
-        
-        setInterval(() => {
-            if(!isDragging && document.getElementById('chat-window').classList.contains('hidden') && !mascot.classList.contains('falling')) {
-                const item = dialogos[Math.floor(Math.random() * dialogos.length)];
-                bubbleText.innerText = item.texto;
-                
-                if(item.animar) {
-                    mascot.classList.remove('standing-alive');
-                    mascot.classList.add('pointing');
-                    setTimeout(() => {
-                        mascot.classList.remove('pointing');
-                        mascot.classList.add('standing-alive');
-                    }, 800);
-                }
-                
-                setTimeout(() => {
-                    bubbleText.innerHTML = "👋 Olá! <span id='greeting-time'></span>! Clique aqui e fala comigo!";
-                    updateGreeting();
-                }, 4000);
-            }
-        }, 9000);
-
-        // 5. Controles do Chat
-        function handleAvatarClick() {
-            toggleChat();
-        }
-
-        function toggleChat(e) {
-            if(e) e.stopPropagation();
-            const chat = document.getElementById('chat-window');
-            chat.classList.toggle('hidden');
-        }
-
-        function showAnswer(tipo) {
-            const respostaBox = document.getElementById('chat-resposta');
-            const respostaTexto = document.getElementById('resposta-texto');
-            respostaBox.classList.remove('hidden');
-            
-            if (tipo === 'endereco') {
-                respostaTexto.innerHTML = "📍 O estúdio fica localizado no coração de Dublin. O endereço exato é enviado após a confirmação do projeto.";
-            } else if (tipo === 'telefone') {
-                respostaTexto.innerHTML = "📞 Contacto direto via WhatsApp corporativo da Nexus / Estúdio disponível após iniciar o agendamento.";
-            } else if (tipo === 'portfolio') {
-                respostaTexto.innerHTML = "🖼️ Suba um pouco a página e explore todas as artes e projetos autorais disponíveis no portefólio.";
-            }
-            
-            const chatBody = respostaBox.parentElement;
-            setTimeout(() => { chatBody.scrollTop = chatBody.scrollHeight; }, 50);
-        }
-    </script>
-</body>
-</html>
+      <div class="hero-tag">Custom T
